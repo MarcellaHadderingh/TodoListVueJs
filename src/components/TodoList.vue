@@ -4,8 +4,10 @@
     to be done" v-model="newTodo" @keyup.enter="addTodo">
    <div v-for="(todo, index) in todos" :key="todo.id" class="todo-item">
      <div class="todo-item-left">
+       <input type="checkbox" v-model="todo.completed">
       <div v-if="!todo.editing" @dblclick="editTodo(todo)" class="todo-item-label">{{todo.title}}</div>
-      <input v-else class="todo-item-edit" type="text" v-model="todo.title">
+      <input v-else class="todo-item-edit" type="text" v-model="todo.title" @blur="doneEdit(todo)"
+       @keyup.enter="doneEdit(todo)"@keyup.esc="cancelEdit(todo)" v-focus>
      </div>
      <div class="remove-item" @click="removeTodo(index)">
        &times;
@@ -21,10 +23,11 @@ export default {
     return {
      newTodo: '',
      idForTodo: 3,
+     beforeEditCache: '',
      todos: [
        {
          'id': 1,
-         'title': 'Finish Vue Screencast',
+         'title': 'Vue Leren',
          'completed': false,
          'editing': false,
        },
@@ -36,6 +39,13 @@ export default {
 
        },
      ]
+    }
+  },
+  directives:{
+    focus: {
+      inserted: function (el){
+        el.focus()
+      }
     }
   },
   methods: {
@@ -54,7 +64,18 @@ export default {
       this.idForTodo++
     },
     editTodo(todo) {
+      this.beforeEditCache = todo.title
       todo.editing = true
+    },
+    doneEdit(todo) {
+         if (todo.title.trim() == '') {
+        todo.title = this.beforeEditCache
+      }
+      todo.editing = false
+    },
+    cancelEdit(todo){
+      todo.title = this.beforeEditCache
+      todo.editing = false
     },
     removeTodo(index) {
       this.todos.splice(index,1)
@@ -65,7 +86,7 @@ export default {
 
 <style lang="scss">
   .todo-input{
-    widows:100%;
+    width:100%;
     padding: 10px 10px;
     font-size: 18px;
     margin-bottom:16px;
