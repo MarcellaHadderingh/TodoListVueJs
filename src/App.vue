@@ -25,7 +25,7 @@ export default {
 }
 
 .container{
-  max-width: 600x;
+  max-width: 600px;
   margin: 0 auto;
 
 }
@@ -37,6 +37,7 @@ export default {
   /* text-align: center; */
   color: #2c3e50;
   margin-top: 60px;
+  font-size: 24px;
 }
 
 .logo{
