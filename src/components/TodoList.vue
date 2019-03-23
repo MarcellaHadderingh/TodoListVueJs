@@ -48,13 +48,13 @@ export default {
       todos: [
         {
           'id': 1,
-          'title': 'Finish Vue Screencast',
+          'title': 'Item 1',
           'completed': false,
           'editing': false,
         },
         {
           'id': 2,
-          'title': 'Take over world',
+          'title': 'Item 2',
           'completed': false,
           'editing': false,
         },
